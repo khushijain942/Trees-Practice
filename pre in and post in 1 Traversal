@@ -1,0 +1,43 @@
+vector<vector<int>> getTreeTraversal(BinaryTreeNode<int> *root){
+    // Write your code here.
+    stack<pair<BinaryTreeNode *,int>> st;
+    st.push({root,1});
+    vector<int> pre,in,post;
+    vector<vector<int>> res;
+    if(root==NULL)
+        return res;
+    while(!st.empty())
+    {
+        auto it=st.top();
+        st.pop();
+        //this is part of preorder
+        //increment 1 to 2
+        //push left side of tree
+        if(it.second==1)
+        {
+            pre.push_back(it.first->data);
+            it.second++;
+            st.push(it);
+            if(it.first->left!=NULL)
+                st.push({it.first->left,1});
+        }
+        //this is part of inorder
+        //increment 2 to 3
+        //push right side of subtree
+        else if(it.second==2)
+        {
+            in.push_back(it.first->data);
+            it.second++;
+            st.push(it);
+            if(it.first->right!=NULL)
+                st.push({it.first->right,1});
+        }
+        //this is part of postorder
+        else
+            post.push_back(it.first->data)
+    }
+    res.push_bacK(pre);
+    res.push_back(in);
+    res.push_back(post);
+    return res;
+}
